@@ -1,11 +1,11 @@
-%define major	20
-%define libname_orig lib%{name}
+%define major 20
 %define libname %mklibname %{name} %{major}
+%define develname %mklibname %{name} -d
 
 Summary:	GNU Pth - GNU Portable Threads
 Name:		pth
 Version:	2.0.7
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	LGPL
 Group:		System/Libraries
 URL:		http://www.gnu.org/software/pth/
@@ -23,14 +23,11 @@ All threads run in the same address space of the server application,
 but each thread has it's own individual program-counter, run-time
 stack, signal mask and errno variable.
 
-
-%package	-n %{libname}
+%package -n %{libname}
 Summary:	GNU Pth - GNU Portable Threads
 Group:		System/Libraries
-Provides:	%{libname_orig} = %{version}-%{release}
-Provides:	%{name} = %{version}-%{release}
 
-%description	-n %{libname}
+%description -n %{libname}
 Pth is a very portable POSIX/ANSI-C based library for Unix platforms
 which provides non-preemptive priority-based scheduling for multiple
 threads of execution ("multithreading") inside server applications.
@@ -40,15 +37,16 @@ stack, signal mask and errno variable.
 
 This package provides the main %{name} library.
 
-
-%package	-n %{libname}-devel
+%package -n %{develname}
 Summary:	GNU Pth - GNU Portable Threads (Headers and Static Libs)
 Group:		Development/C
 Requires:	%{libname} = %{version}
 Provides:	%{name}-devel = %{version}-%{release}
-Provides:	%{libname_orig}-devel = %{version}-%{release}
+Provides:	lib%{name}-devel = %{version}-%{release}
+Obsoletes:	%mklibname %{name} 20 -d
+Provides:	%mklibname %{name} 20 -d
 
-%description	-n %{libname}-devel
+%description -n %{develname}
 Pth is a very portable POSIX/ANSI-C based library for Unix platforms.
 
 This package provides all necessary files to develop or compile any
@@ -60,16 +58,19 @@ applications or libraries that use %{name} library.
 %patch2 -p1 -b .parallel
 
 %build
-%configure2_5x --enable-optimize=yes --enable-pthread=no
+%configure2_5x \
+	--enable-optimize=yes \
+	--enable-pthread=yes
 %make
-%check test
+%check 
+make test
 
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 %makeinstall_std
 
-%multiarch_binaries  %{buildroot}%{_bindir}/pth-config
+%multiarch_binaries %{buildroot}%{_bindir}/pth-config
 
 %post -n %{libname} -p /sbin/ldconfig
 %postun	-n %{libname} -p /sbin/ldconfig
@@ -78,20 +79,17 @@ applications or libraries that use %{name} library.
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 %files -n %{libname}
-%defattr(644,root,root,755)
-%doc COPYING
-%attr(755,root,root) %{_libdir}/lib*.so.%{major}*
+%defattr(-,root,root)
+%{_libdir}/lib*.so.%{major}*
 
-%files -n %{libname}-devel
-%defattr(644,root,root,755)
+%files -n %{develname}
+%defattr(-,root,root)
 %doc AUTHORS ChangeLog NEWS PORTING README THANKS
-%attr(755,root,root) %{_bindir}/pth-config
-%multiarch %attr(755,root,root) %{multiarch_bindir}/pth-config
+%{_bindir}/pth-config
+%multiarch %{multiarch_bindir}/pth-config
 %{_datadir}/aclocal/*.m4
 %{_includedir}/*
 %{_libdir}/lib*.a
 %{_libdir}/lib*.la
 %{_libdir}/lib*.so
 %{_mandir}/man?/*
-
-
