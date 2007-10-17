@@ -59,10 +59,9 @@ applications or libraries that use %{name} library.
 
 %configure2_5x \
 	--enable-optimize=yes \
-	--enable-pthread=yes
+	--enable-pthread=no
 	
-# (tpg)	with enabled pthreads parallel compiling doesn't work
-# so that's why this call should be invoked first before "main" make.
+# (tpg)	without this parallel make fails
 %make pth_p.h
 
 %make
@@ -76,7 +75,6 @@ make test
 %makeinstall_std
 
 %multiarch_binaries %{buildroot}%{_bindir}/pth-config
-%multiarch_binaries %{buildroot}%{_bindir}/pthread-config
 
 %post -n %{libname} -p /sbin/ldconfig
 %postun	-n %{libname} -p /sbin/ldconfig
@@ -92,9 +90,7 @@ make test
 %defattr(-,root,root)
 %doc AUTHORS ChangeLog NEWS PORTING README THANKS
 %{_bindir}/pth-config
-%{_bindir}/pthread-config
 %multiarch %{multiarch_bindir}/pth-config
-%multiarch %{multiarch_bindir}/pthread-config
 %{_datadir}/aclocal/*.m4
 %{_includedir}/*
 %{_libdir}/lib*.a
