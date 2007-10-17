@@ -6,13 +6,12 @@ Summary:	GNU Pth - GNU Portable Threads
 Name:		pth
 Version:	2.0.7
 Release:	%mkrel 2
-License:	LGPL
+License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.gnu.org/software/pth/
 Source0:	ftp://ftp.gnu.org/pub/gnu/pth/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.gnu.org/pub/gnu/pth/%{name}-%{version}.tar.gz.sig
 Patch1:		%{name}-2.0.0-pth-config.in.patch
-Patch2:		%{name}-2.0.0-parallel-make.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -55,13 +54,19 @@ applications or libraries that use %{name} library.
 %prep
 %setup -q
 %patch1 -p1 -b .cflags-ldflags
-%patch2 -p1 -b .parallel
 
 %build
+
 %configure2_5x \
 	--enable-optimize=yes \
 	--enable-pthread=yes
+	
+# (tpg)	with enabled pthreads parallel compiling doesn't work
+# so that's why this call should be invoked first before "main" make.
+%make pth_p.h
+
 %make
+
 %check 
 make test
 
@@ -71,6 +76,7 @@ make test
 %makeinstall_std
 
 %multiarch_binaries %{buildroot}%{_bindir}/pth-config
+%multiarch_binaries %{buildroot}%{_bindir}/pthread-config
 
 %post -n %{libname} -p /sbin/ldconfig
 %postun	-n %{libname} -p /sbin/ldconfig
@@ -86,7 +92,9 @@ make test
 %defattr(-,root,root)
 %doc AUTHORS ChangeLog NEWS PORTING README THANKS
 %{_bindir}/pth-config
+%{_bindir}/pthread-config
 %multiarch %{multiarch_bindir}/pth-config
+%multiarch %{multiarch_bindir}/pthread-config
 %{_datadir}/aclocal/*.m4
 %{_includedir}/*
 %{_libdir}/lib*.a
