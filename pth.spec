@@ -12,6 +12,7 @@ URL:		http://www.gnu.org/software/pth/
 Source0:	ftp://ftp.gnu.org/pub/gnu/pth/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.gnu.org/pub/gnu/pth/%{name}-%{version}.tar.gz.sig
 Patch1:		%{name}-2.0.0-pth-config.in.patch
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Pth is a very portable POSIX/ANSI-C based library for Unix platforms
