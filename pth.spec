@@ -11,8 +11,8 @@ Group:		System/Libraries
 URL:		http://www.gnu.org/software/pth/
 Source0:	ftp://ftp.gnu.org/pub/gnu/pth/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.gnu.org/pub/gnu/pth/%{name}-%{version}.tar.gz.sig
-Patch1:		%{name}-2.0.0-pth-config.in.patch
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+Patch0:		%{name}-2.0.0-pth-config.in.patch
+Patch1:		pth-2.0.7-linux3.patch
 
 %description
 Pth is a very portable POSIX/ANSI-C based library for Unix platforms
@@ -53,7 +53,8 @@ applications or libraries that use %{name} library.
 
 %prep
 %setup -q
-%patch1 -p1 -b .cflags-ldflags
+%patch0 -p1 -b .cflags-ldflags
+%patch1 -p1 -b .linux3
 
 %build
 
@@ -70,34 +71,21 @@ applications or libraries that use %{name} library.
 make test
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 %makeinstall_std
 
 %multiarch_binaries %{buildroot}%{_bindir}/pth-config
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun	-n %{libname} -p /sbin/ldconfig
-%endif
-
-%clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 %files -n %{libname}
-%defattr(-,root,root)
 %{_libdir}/lib*.so.%{major}*
 
 %files -n %{develname}
-%defattr(-,root,root)
 %doc AUTHORS ChangeLog NEWS PORTING README THANKS
 %{_bindir}/pth-config
 %{multiarch_bindir}/pth-config
 %{_datadir}/aclocal/*.m4
 %{_includedir}/*
 %{_libdir}/lib*.a
-%{_libdir}/lib*.la
 %{_libdir}/lib*.so
 %{_mandir}/man?/*
