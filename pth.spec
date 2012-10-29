@@ -56,6 +56,7 @@ applications or libraries that use %{name} library.
 %patch1 -p1 -b .linux3~
 
 %build
+CFLAGS="%{optflags} -Ofast" \
 %configure2_5x	--enable-optimize=yes \
 		--enable-pthread=no
 	
