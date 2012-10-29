@@ -41,7 +41,6 @@ Summary:	GNU Pth - GNU Portable Threads (Headers and Static Libs)
 Group:		Development/C
 Requires:	%{libname} = %{version}
 Provides:	%{name}-devel = %{version}-%{release}
-Provides:	lib%{name}-devel = %{version}-%{release}
 Obsoletes:	%mklibname %{name} 20 -d
 Provides:	%mklibname %{name} 20 -d
 
@@ -54,12 +53,11 @@ applications or libraries that use %{name} library.
 %prep
 %setup -q
 %patch0 -p1 -b .cflags-ldflags~
-%patch1 -p1 -b .linux3̃~
+%patch1 -p1 -b .linux3~
 
 %build
-%configure2_5x \
-	--enable-optimize=yes \
-	--enable-pthread=no
+%configure2_5x	--enable-optimize=yes \
+		--enable-pthread=no
 	
 # (tpg)	without this parallel make fails
 %make pth_p.h
