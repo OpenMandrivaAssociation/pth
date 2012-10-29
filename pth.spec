@@ -13,7 +13,7 @@ Group:		System/Libraries
 URL:		http://www.gnu.org/software/pth/
 Source0:	ftp://ftp.gnu.org/pub/gnu/pth/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.gnu.org/pub/gnu/pth/%{name}-%{version}.tar.gz.sig
-Patch0:		%{name}-2.0.0-pth-config.in.patch
+Patch0:		pth-2.0.0-pth-config.in.patch
 Patch1:		pth-2.0.7-linux3.patch
 %if %{with uclibc}
 BuildRequires:	uClibc-devel >= 0.9.33.2-15
@@ -119,8 +119,6 @@ mkdir -p %{buildroot}/%{_lib}
 mv %{buildroot}%{_libdir}/libpth.so.%{major}* %{buildroot}/%{_lib}
 ln -srf %{buildroot}/%{_lib}/libpth.so.%{major}.*.* %{buildroot}%{_libdir}/libpth.so
 
-%multiarch_binaries %{buildroot}%{_bindir}/pth-config
-
 %files -n %{libname}
 /%{_lib}/libpth.so.%{major}*
 
@@ -132,7 +130,6 @@ ln -srf %{buildroot}/%{_lib}/libpth.so.%{major}.*.* %{buildroot}%{_libdir}/libpt
 %files -n %{devname}
 %doc AUTHORS ChangeLog NEWS PORTING README THANKS
 %{_bindir}/pth-config
-%{multiarch_bindir}/pth-config
 %{_datadir}/aclocal/pth.m4
 %{_includedir}/pth.h
 %{_libdir}/libpth.a
