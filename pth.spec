@@ -107,19 +107,26 @@ make -C system test
 %install
 %if %{with uclibc}
 %makeinstall_std -C uclibc
+mkdir -p %{buildroot}%{uclibc_root}/%{_lib}
+mv %{buildroot}%{uclibc_root}%{_libdir}/libpth.so.%{major}* %{buildroot}%{uclibc_root}/%{_lib}
+ln -srf %{buildroot}%{uclibc_root}/%{_lib}/libpth.so.%{major}.*.* %{buildroot}%{uclibc_root}%{_libdir}/libpth.so
+
 rm -r %{buildroot}%{uclibc_root}%{_bindir}
 %endif
 
 %makeinstall_std -C system
+mkdir -p %{buildroot}/%{_lib}
+mv %{buildroot}%{_libdir}/libpth.so.%{major}* %{buildroot}/%{_lib}
+ln -srf %{buildroot}/%{_lib}/libpth.so.%{major}.*.* %{buildroot}%{_libdir}/libpth.so
 
 %multiarch_binaries %{buildroot}%{_bindir}/pth-config
 
 %files -n %{libname}
-%{_libdir}/libpth.so.%{major}*
+/%{_lib}/libpth.so.%{major}*
 
 %if %{with uclibc}
 %files -n uclibc-%{libname}
-%{uclibc_root}%{_libdir}/libpth.so.%{major}*
+%{uclibc_root}/%{_lib}/libpth.so.%{major}*
 %endif
 
 %files -n %{devname}
