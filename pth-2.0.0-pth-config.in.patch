@@ -1,0 +1,17 @@
+diff -urN pth-2.0.0-orig/pth-config.in pth-2.0.0/pth-config.in
+--- pth-2.0.0-orig/pth-config.in	2003-01-01 23:45:06.000000000 +0800
++++ pth-2.0.0/pth-config.in	2004-05-19 23:18:46.301148256 +0800
+@@ -109,11 +109,11 @@
+             output="$output $pth_acdir"
+             ;;
+         --cflags)
+-            output="$output -I$pth_includedir"
++            output="$output"
+             output_extra="$output_extra $pth_cflags"
+             ;;
+         --ldflags)
+-            output="$output -L$pth_libdir"
++            output="$output"
+             output_extra="$output_extra $pth_ldflags"
+             ;;
+         --libs)
