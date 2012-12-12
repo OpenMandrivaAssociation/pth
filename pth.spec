@@ -139,3 +139,31 @@ ln -srf %{buildroot}/%{_lib}/libpth.so.%{major}.*.* %{buildroot}%{_libdir}/libpt
 %{uclibc_root}%{_libdir}/libpth.so
 %endif
 %{_mandir}/man?/*
+
+%changelog
+* Mon Oct 29 2012 Per ?yvind Karlsen <peroyvind@mandriva.org> 2.0.7-11
++ Revision: 820321
+- drop multiarch workaround, there's already a patch fixing it in place..
+- move library under /%%{_lib}
+- do uclibc build
+- compile with -Ofast
+- drop bogus 'lib%%{name}-devel' provides
+- cleanups
+
+* Mon Oct 01 2012 Alexander Khrukin <akhrukin@mandriva.org> 2.0.7-10
++ Revision: 818082
+- rel up
+- pth-2.0.7-linux3.patch added
+- pth-2.0.7-linux3.patch see https://bugzilla.redhat.com/show_bug.cgi?id=744740
+
+* Mon May 02 2011 Oden Eriksson <oeriksson@mandriva.com> 2.0.7-9
++ Revision: 661715
+- multiarch fixes
+
+* Fri Dec 03 2010 Oden Eriksson <oeriksson@mandriva.com> 2.0.7-8mdv2011.0
++ Revision: 607236
+- rebuild
+
+* Tue Mar 16 2010 Oden Eriksson <oeriksson@mandriva.com> 2.0.7-7mdv2010.1
++ Revision: 521159
+- rebuilt for 2010.1
