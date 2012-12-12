@@ -7,7 +7,7 @@
 Summary:	GNU Pth - GNU Portable Threads
 Name:		pth
 Version:	2.0.7
-Release:	11
+Release:	12
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.gnu.org/software/pth/
@@ -141,7 +141,10 @@ ln -srf %{buildroot}/%{_lib}/libpth.so.%{major}.*.* %{buildroot}%{_libdir}/libpt
 %{_mandir}/man?/*
 
 %changelog
-* Mon Oct 29 2012 Per ?yvind Karlsen <peroyvind@mandriva.org> 2.0.7-11
+* Thu Dec 13 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 2.0.7-12
+- rebuild on ABF
+
+* Mon Oct 29 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 2.0.7-11
 + Revision: 820321
 - drop multiarch workaround, there's already a patch fixing it in place..
 - move library under /%%{_lib}
