@@ -7,7 +7,7 @@
 Summary:	GNU Pth - GNU Portable Threads
 Name:		pth
 Version:	2.0.7
-Release:	12
+Release:	13
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.gnu.org/software/pth/
@@ -60,7 +60,7 @@ Summary:	GNU Pth - GNU Portable Threads (Headers and Static Libs)
 Group:		Development/C
 Requires:	%{libname} = %{version}
 %if %{with uclibc}
-Requires:	%{libname} = %{version}
+Requires:	uclibc-%{libname} = %{version}
 %endif
 Provides:	%{name}-devel = %{version}-%{release}
 Obsoletes:	%mklibname %{name} 20 -d
@@ -141,6 +141,9 @@ ln -srf %{buildroot}/%{_lib}/libpth.so.%{major}.*.* %{buildroot}%{_libdir}/libpt
 %{_mandir}/man?/*
 
 %changelog
+* Mon Jan  7 2013 Per Øyvind Karlsen <peroyvind@mandriva.org> 2.0.7-13
+- fix missing dependency on uclibc library package in -devel package
+
 * Thu Dec 13 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 2.0.7-12
 - rebuild on ABF
 
