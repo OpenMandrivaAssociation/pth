@@ -1,0 +1,18 @@
+--- pth-2.0.7/pth_syscall.c.orig	2013-04-08 13:53:10.443806585 +0100
++++ pth-2.0.7/pth_syscall.c	2013-04-08 13:53:25.908805682 +0100
+@@ -42,7 +42,6 @@
+ #define sleep         __pth_sys_sleep
+ #define sigprocmask   __pth_sys_sigmask
+ #define sigwait       __pth_sys_sigwait
+-#define select        __pth_sys_select
+ #define pselect       __pth_sys_pselect
+ #define poll          __pth_sys_poll
+ #define connect       __pth_sys_connect
+@@ -93,7 +92,6 @@
+ #undef sleep
+ #undef sigprocmask
+ #undef sigwait
+-#undef select
+ #undef pselect
+ #undef poll
+ #undef connect

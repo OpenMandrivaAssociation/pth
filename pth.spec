@@ -16,6 +16,8 @@ Source1:	ftp://ftp.gnu.org/pub/gnu/pth/%{name}-%{version}.tar.gz.sig
 Patch0:		pth-2.0.0-pth-config.in.patch
 Patch1:		pth-2.0.7-linux3.patch
 Patch2:		pth-aarch64.patch
+Patch3:		pth-2.0.7-select.patch
+
 %if %{with uclibc}
 BuildRequires:	uClibc-devel >= 0.9.33.2-15
 %endif
@@ -78,6 +80,7 @@ applications or libraries that use %{name} library.
 %patch0 -p1 -b .cflags-ldflags~
 %patch1 -p1 -b .linux3~
 %patch2 -p1 -b .aarch64
+%patch3 -p1 -b .select
 
 %build
 CONFIGURE_TOP="$PWD"
