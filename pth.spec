@@ -7,7 +7,7 @@
 Summary:	GNU Pth - GNU Portable Threads
 Name:		pth
 Version:	2.0.7
-Release:	15
+Release:	16
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://www.gnu.org/software/pth/
