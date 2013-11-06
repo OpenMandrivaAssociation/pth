@@ -10,7 +10,7 @@ Version:	2.0.7
 Release:	17
 License:	LGPLv2+
 Group:		System/Libraries
-URL:		http://www.gnu.org/software/pth/
+Url:		http://www.gnu.org/software/pth/
 Source0:	ftp://ftp.gnu.org/pub/gnu/pth/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.gnu.org/pub/gnu/pth/%{name}-%{version}.tar.gz.sig
 Patch0:		pth-2.0.0-pth-config.in.patch
@@ -66,8 +66,6 @@ Requires:	%{libname} = %{version}
 Requires:	uclibc-%{libname} = %{version}
 %endif
 Provides:	%{name}-devel = %{version}-%{release}
-Obsoletes:	%mklibname %{name} 20 -d
-Provides:	%mklibname %{name} 20 -d
 
 %description -n	%{devname}
 Pth is a very portable POSIX/ANSI-C based library for Unix platforms.
@@ -77,10 +75,7 @@ applications or libraries that use %{name} library.
 
 %prep
 %setup -q
-%patch0 -p1 -b .cflags-ldflags~
-%patch1 -p1 -b .linux3~
-%patch2 -p1 -b .aarch64
-%patch3 -p1 -b .select
+%apply_patches
 
 %build
 CONFIGURE_TOP="$PWD"
@@ -88,8 +83,8 @@ CONFIGURE_TOP="$PWD"
 mkdir -p uclibc
 pushd uclibc
 %uclibc_configure \
-		--enable-optimize=yes \
-		--enable-pthread=no
+	--enable-optimize=yes \
+	--enable-pthread=no
 %make pth_p.h
 %make
 popd
@@ -98,8 +93,9 @@ popd
 mkdir -p system
 pushd system
 CFLAGS="%{optflags} -Ofast" \
-%configure2_5x	--enable-optimize=yes \
-		--enable-pthread=no
+%configure2_5x \
+	--enable-optimize=yes \
+	--enable-pthread=no
 	
 # (tpg)	without this parallel make fails
 %make pth_p.h
@@ -145,36 +141,3 @@ ln -srf %{buildroot}/%{_lib}/libpth.so.%{major}.*.* %{buildroot}%{_libdir}/libpt
 %endif
 %{_mandir}/man?/*
 
-%changelog
-* Mon Jan  7 2013 Per Øyvind Karlsen <peroyvind@mandriva.org> 2.0.7-13
-- fix missing dependency on uclibc library package in -devel package
-
-* Thu Dec 13 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 2.0.7-12
-- rebuild on ABF
-
-* Mon Oct 29 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 2.0.7-11
-+ Revision: 820321
-- drop multiarch workaround, there's already a patch fixing it in place..
-- move library under /%%{_lib}
-- do uclibc build
-- compile with -Ofast
-- drop bogus 'lib%%{name}-devel' provides
-- cleanups
-
-* Mon Oct 01 2012 Alexander Khrukin <akhrukin@mandriva.org> 2.0.7-10
-+ Revision: 818082
-- rel up
-- pth-2.0.7-linux3.patch added
-- pth-2.0.7-linux3.patch see https://bugzilla.redhat.com/show_bug.cgi?id=744740
-
-* Mon May 02 2011 Oden Eriksson <oeriksson@mandriva.com> 2.0.7-9
-+ Revision: 661715
-- multiarch fixes
-
-* Fri Dec 03 2010 Oden Eriksson <oeriksson@mandriva.com> 2.0.7-8mdv2011.0
-+ Revision: 607236
-- rebuild
-
-* Tue Mar 16 2010 Oden Eriksson <oeriksson@mandriva.com> 2.0.7-7mdv2010.1
-+ Revision: 521159
-- rebuilt for 2010.1
