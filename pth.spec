@@ -95,6 +95,7 @@ pushd system
 CFLAGS="%{optflags} -Ofast" \
 %configure2_5x \
 	--enable-optimize=yes \
+    --disable-static \
 	--enable-pthread=no
 	
 # (tpg)	without this parallel make fails
