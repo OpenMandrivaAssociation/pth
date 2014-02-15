@@ -134,7 +134,6 @@ ln -srf %{buildroot}/%{_lib}/libpth.so.%{major}.*.* %{buildroot}%{_libdir}/libpt
 %{_bindir}/pth-config
 %{_datadir}/aclocal/pth.m4
 %{_includedir}/pth.h
-%{_libdir}/libpth.a
 %{_libdir}/libpth.so
 %if %{with uclibc}
 %{uclibc_root}%{_libdir}/libpth.a
