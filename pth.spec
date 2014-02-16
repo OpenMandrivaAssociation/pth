@@ -17,6 +17,8 @@ Patch0:		pth-2.0.0-pth-config.in.patch
 Patch1:		pth-2.0.7-linux3.patch
 Patch2:		pth-aarch64.patch
 Patch3:		pth-2.0.7-select.patch
+Patch4:		pth-2.0.7-dont-remove-gcc-g.patch
+Patch5:		localedir-configure.patch
 
 %if %{with uclibc}
 BuildRequires:	uClibc-devel >= 0.9.33.2-15
@@ -95,7 +97,7 @@ pushd system
 CFLAGS="%{optflags} -Ofast" \
 %configure2_5x \
 	--enable-optimize=yes \
-    --disable-static \
+	--disable-static \
 	--enable-pthread=no
 	
 # (tpg)	without this parallel make fails
@@ -136,8 +138,6 @@ ln -srf %{buildroot}/%{_lib}/libpth.so.%{major}.*.* %{buildroot}%{_libdir}/libpt
 %{_includedir}/pth.h
 %{_libdir}/libpth.so
 %if %{with uclibc}
-%{uclibc_root}%{_libdir}/libpth.a
 %{uclibc_root}%{_libdir}/libpth.so
 %endif
 %{_mandir}/man?/*
-
