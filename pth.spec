@@ -86,6 +86,7 @@ mkdir -p uclibc
 pushd uclibc
 %uclibc_configure \
 	--enable-optimize=yes \
+	--disable-static \
 	--enable-pthread=no
 %make pth_p.h
 %make
