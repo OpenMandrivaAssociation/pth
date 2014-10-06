@@ -22,6 +22,7 @@ Patch5:		localedir-configure.patch
 
 %if %{with uclibc}
 BuildRequires:	uClibc-devel >= 0.9.33.2-15
+BuildRequires:	uClibc++-devel
 %endif
 
 %description
