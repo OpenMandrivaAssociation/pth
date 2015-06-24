@@ -67,6 +67,7 @@ This package provides the main %{name} library.
 Summary:	GNU Pth - GNU Portable Threads (Headers and Static Libs)
 Group:		Development/C
 Requires:	%{devname} = %{EVRD}
+Requires:	uclibc-%{libname} = %{EVRD}
 Provides:	uclibc-%{name}-devel = %{EVRD}
 Conflicts:	%{devname} < 2.0.7-25
 
