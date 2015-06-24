@@ -7,12 +7,13 @@
 Summary:	GNU Pth - GNU Portable Threads
 Name:		pth
 Version:	2.0.7
-Release:	24
+Release:	25
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.gnu.org/software/pth/
 Source0:	ftp://ftp.gnu.org/pub/gnu/pth/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.gnu.org/pub/gnu/pth/%{name}-%{version}.tar.gz.sig
+Source2:	%{name}.rpmlintrc
 Patch0:		pth-2.0.0-pth-config.in.patch
 Patch1:		pth-2.0.7-linux3.patch
 Patch2:		pth-aarch64.patch
@@ -47,6 +48,7 @@ stack, signal mask and errno variable.
 
 This package provides the main %{name} library.
 
+%if %{with uclibc}
 %package -n	uclibc-%{libname}
 Summary:	GNU Pth - GNU Portable Threads
 Group:		System/Libraries
@@ -61,13 +63,24 @@ stack, signal mask and errno variable.
 
 This package provides the main %{name} library.
 
+%package -n	uclibc-%{devname}
+Summary:	GNU Pth - GNU Portable Threads (Headers and Static Libs)
+Group:		Development/C
+Requires:	%{devname} = %{EVRD}
+Provides:	uclibc-%{name}-devel = %{EVRD}
+Conflicts:	%{devname} < 2.0.7-25
+
+%description -n	uclibc-%{devname}
+Pth is a very portable POSIX/ANSI-C based library for Unix platforms.
+
+This package provides all necessary files to develop or compile any
+applications or libraries that use %{name} library.
+%endif
+
 %package -n	%{devname}
 Summary:	GNU Pth - GNU Portable Threads (Headers and Static Libs)
 Group:		Development/C
 Requires:	%{libname} = %{version}
-%if %{with uclibc}
-Requires:	uclibc-%{libname} = %{version}
-%endif
 Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n	%{devname}
@@ -97,17 +110,17 @@ popd
 mkdir -p system
 pushd system
 CFLAGS="%{optflags} -Ofast" \
-%configure2_5x \
+%configure \
 	--enable-optimize=yes \
 	--disable-static \
 	--enable-pthread=no
-	
+
 # (tpg)	without this parallel make fails
 %make pth_p.h
 %make
 popd
 
-%check 
+%check
 make -C system test
 
 %install
@@ -131,6 +144,9 @@ ln -srf %{buildroot}/%{_lib}/libpth.so.%{major}.*.* %{buildroot}%{_libdir}/libpt
 %if %{with uclibc}
 %files -n uclibc-%{libname}
 %{uclibc_root}/%{_lib}/libpth.so.%{major}*
+
+%files -n uclibc-%{devname}
+%{uclibc_root}%{_libdir}/libpth.so
 %endif
 
 %files -n %{devname}
@@ -139,7 +155,4 @@ ln -srf %{buildroot}/%{_lib}/libpth.so.%{major}.*.* %{buildroot}%{_libdir}/libpt
 %{_datadir}/aclocal/pth.m4
 %{_includedir}/pth.h
 %{_libdir}/libpth.so
-%if %{with uclibc}
-%{uclibc_root}%{_libdir}/libpth.so
-%endif
 %{_mandir}/man?/*
