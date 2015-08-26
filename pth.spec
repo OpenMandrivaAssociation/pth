@@ -1,6 +1,7 @@
 %define	major	20
 %define	libname	%mklibname %{name} %{major}
 %define	devname	%mklibname %{name} -d
+%define _disable_lto 1
 
 %bcond_with	uclibc
 
