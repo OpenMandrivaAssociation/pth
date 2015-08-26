@@ -2,12 +2,12 @@
 %define	libname	%mklibname %{name} %{major}
 %define	devname	%mklibname %{name} -d
 
-%bcond_without	uclibc
+%bcond_with	uclibc
 
 Summary:	GNU Pth - GNU Portable Threads
 Name:		pth
 Version:	2.0.7
-Release:	26
+Release:	27
 License:	LGPLv2+
 Group:		System/Libraries
 Url:		http://www.gnu.org/software/pth/
