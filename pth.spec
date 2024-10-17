@@ -9,7 +9,7 @@ Version:	2.0.7
 Release:	29
 License:	LGPLv2+
 Group:		System/Libraries
-Url:		http://www.gnu.org/software/pth/
+Url:		https://www.gnu.org/software/pth/
 Source0:	ftp://ftp.gnu.org/pub/gnu/pth/%{name}-%{version}.tar.gz
 Source1:	ftp://ftp.gnu.org/pub/gnu/pth/%{name}-%{version}.tar.gz.sig
 Source2:	%{name}.rpmlintrc
