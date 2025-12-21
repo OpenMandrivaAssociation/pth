@@ -20,6 +20,11 @@ Patch3:		pth-2.0.7-select.patch
 Patch4:		pth-2.0.7-dont-remove-gcc-g.patch
 Patch5:		localedir-configure.patch
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 %description
 Pth is a very portable POSIX/ANSI-C based library for Unix platforms
 which provides non-preemptive priority-based scheduling for multiple
